@@ -27,23 +27,32 @@ function render(pokemon) {
   $root.innerHTML = `
     <article class="pokemon">
       <div class="pokemon__thumbnail">
-        <figure>
-          <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${setNumberPokemon(
+        <figure class="pokemon__figure">
+          <img class="pokemon__image" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${setNumberPokemon(
             pokemon.id
           )}.png" alt="${pokemon.name}" />
         </figure>
       </div>
       <div class="pokemon__info">
-        <h2>${pokemon.name}</h2>
-        <p class="pokemon__number"><strong>#${setNumberPokemon(
-          pokemon.id
-        )}</strong></p>
+        <div class="pokemon__meta">
+          <h2 class="pokemon__name">${pokemon.name}</h2>
+          <p class="pokemon__number"><strong class="pokemon__position">#${setNumberPokemon(
+            pokemon.id
+          )}</strong></p>
+        </div>
+        <ul class="pokemon__types"></ul>
       </div>
     </article>
   `;
+
+  const $listTypes = $root.querySelector(".pokemon__types");
+
+  pokemon.types.forEach((type) => {
+    $listTypes.innerHTML += `<li class="pokemon__type" style="background-image: url(./image/${type.type.name}.png);"></li>`;
+  });
 }
 async function init() {
-  const pokemon = await getPokemonById(53);
+  const pokemon = await getPokemonById(6);
   render(pokemon);
 }
 
